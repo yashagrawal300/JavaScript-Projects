@@ -1,0 +1,32 @@
+#heading{
+    border-color: red;
+    border-width: 10px;
+    font-size: 30px;
+    width: max-content;
+
+}
+
+#newTask{
+    position: relative;
+    top: 50px;
+}
+
+#nre{
+    border-width: 10px;
+}
+
+
+#addTask{
+    width: 300px;
+    height: 50px;
+    border-color: #ff0000;
+    border-width: 5px;
+
+
+
+
+}
+
+
+
+
