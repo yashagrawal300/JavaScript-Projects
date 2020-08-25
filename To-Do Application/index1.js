@@ -1,5 +1,6 @@
 var pos = 10;
 var c = 0;
+var tasks = [];
 
 
 function cr() {
@@ -11,8 +12,6 @@ function cr() {
 
         r.style.borderWidth = 5 +"px";
         r.style.borderColor = "rebeccapurple";
-        r.style.
-
 
         r.id = c;
 
@@ -20,11 +19,24 @@ function cr() {
         r.style.top = pos + "px";
         r.style.position = "relative";
         r.innerText = k.value;
+        tasks.push(k.value);
+
+
+        r.onmouseenter = function(){
+            this.innerText = "Delete";
+
+        };
+        r.onmouseleave = function(){
+
+            this.innerText = tasks[this.id] ;
+        };
+
         r.onclick = function() {
             this.remove();
 
+
     };
-        c+=2;
+        c+=1;
         k.value= "Enter Something";
         d.appendChild(q);
         d.appendChild(q)
