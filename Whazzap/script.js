@@ -1,3 +1,20 @@
+//Targets
+
+//1) Create new username(Unique)
+//2) List all the groups(tags in future)
+//3) Click on the group and start messaging(start marking a new group)
+//4) Group unique id
+//5) Enter the group id to join
+//6) Delete the group
+//7) Create new group
+
+
+
+
+
+
+
+
 var firebaseConfig = {
     apiKey: "AIzaSyDOWyD_Y2nbygOvIuQDV6tXOTdQSGdoF7o",
     authDomain: "whazzap-2e9b5.firebaseapp.com",
@@ -14,17 +31,33 @@ firebase.analytics();
 
 
 database = firebase.database();
-var ref = database.ref("Chat/");
+
+var channelName = sessionStorage.getItem("channelName");
+var userName = sessionStorage.getItem("userName");
+
+
+
+
+
+
+var ref = database.ref(channelName + "/");
+
+
 
 
 var gotit = 0;
 
 
 
+
+
+
+
 function send(){
     s = document.getElementById("typemessage");
     var data ={
-        Message: s.value
+        Message: s.value,
+        UserName: userName
 
     }
 
@@ -39,19 +72,39 @@ function send(){
 ref.on('value', gotdata, errdata);
 
 function gotdata(data) {
+    var titlechannelName = document.getElementById("titlechannelName")
+
+    titlechannelName.innerText = channelName;
+
 
     const db = data.val();
     const keys = Object.keys(db);
 
     j = document.getElementById("messageBox");
+    s = document.getElementById("typemessage");
 
     if(gotit ===0){
         for (let i = 0; i < keys.length; i++) {
             var k = keys[i];
             var mess = db[k].Message;
-            var h = document.createElement("p");
-            h.innerText = mess;
-            j.appendChild(h);
+            var username = db[k].UserName;
+
+
+
+            var a = document.createElement("tr");
+            var b = document.createElement("td");
+            var c = document.createElement("td");
+
+
+
+            b.innerText = mess;
+            c.innerText = username;
+
+            a.appendChild(b)
+            a.appendChild(c);
+
+
+            j.appendChild(a);
             gotit = 1;
         }
 
@@ -60,9 +113,30 @@ function gotdata(data) {
     else{
         var k = keys[keys.length -1];
         var mess = db[k].Message;
-        var h = document.createElement("p");
-        h.innerText = mess;
-        j.appendChild(h);
+        var username = db[k].UserName;
+
+
+
+        var a = document.createElement("tr");
+        var b = document.createElement("td");
+        var c = document.createElement("td");
+
+
+
+        b.innerText = mess;
+        c.innerText = username;
+
+        a.appendChild(b)
+        a.appendChild(c);
+
+
+        j.appendChild(a);
+
+
+
+
+        s.value = "";
+
 
     }
 
