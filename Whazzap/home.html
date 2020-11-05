@@ -6,14 +6,21 @@
     <script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-analytics.js"></script>
     <script src = "https://gstatic.com/firebasejs/7.24.0/firebase-database.js"></script>
+    <script src = "https://gstatic.com/firebasejs/7.24.0/firebase-auth.js"></script>
     <script src = "script.js"></script>
     <link href = "style.css" rel = "stylesheet">
 </head>
 <body>
-<h1 id = "titlechannelName"></h1>
+<h1 align = center>Whazzap</h1>
+<br><br>
+
+
+<h3 id = "Username" align = center></h3>
 
 <input type= "text" placeholder = "Enter your message" id = "typemessage">
 <button onclick = send()>Send</button>
+<button onclick = del()>Delete the Channel</button>
+<button onclick = signout()>Signout</button>
 
 
 <table id = "messageBox" cellspacing =40px border = 1px >

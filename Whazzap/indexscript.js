@@ -12,34 +12,89 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 
+var database = firebase.database();
 
 
 
-database = firebase.database();
 
 
 
-function LogIn(){
-    var a = document.getElementById("LogInEmail").value;
 
-    var b = document.getElementById("LogInPassword").value;
+firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+        // User is signed in.
+        location.replace( "home.html");
+        sessionStorage.setItem("email", user.email.slice(0, -4));
 
 
-    auth.loginWith
+
+
+
+    } else {
+        // User is signed out.
+        // ...
+    }
+});
+
+
+
+
+
+function login(){
+    const loginemail = document.getElementById("loginEmail").value;
+    const loginpassword = document.getElementById("loginPassword").value;
+
+    firebase.auth().signInWithEmailAndPassword(loginemail, loginpassword).catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        alert(errorMessage);
+
+        // ...
+    });
+
+
+
 }
 
 
+function signup(){
+
+
+    const email = document.getElementById("siginEmail");
+    const password = document.getElementById("siginPassword");
+    const username = document.getElementById("siginUsername")
+    const repeatpassword = document.getElementById("siginRepeatPassword");
+
+
+    if(password.value !== repeatpassword.value){
+        alert("Enter the same password");
+    }
+    else {
+
+        firebase.auth().createUserWithEmailAndPassword(email.value, password.value).catch(function(error) {
+            // Handle Errors here.
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            alert(errorMessage);
+
+        });
+
+        if (firebase.auth().currentUser){
+
+
+            firebase.database().ref('users/' + email.value.slice(0, -4)).set({
+                username: username.value,
+                email: email.value
+            });
+        }
 
 
 
-function enter(){
-    const a = document.getElementById("userName");
-    const b = document.getElementById("channelName");
+
+    }
 
 
 
-    sessionStorage.setItem("userName" , a.value);
-    sessionStorage.setItem("channelName" , b.value);
 
-    location.href = "home.html";
 }

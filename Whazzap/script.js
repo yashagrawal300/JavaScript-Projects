@@ -9,12 +9,6 @@
 //7) Create new group
 
 
-
-
-
-
-
-
 var firebaseConfig = {
     apiKey: "AIzaSyDOWyD_Y2nbygOvIuQDV6tXOTdQSGdoF7o",
     authDomain: "whazzap-2e9b5.firebaseapp.com",
@@ -31,47 +25,82 @@ firebase.analytics();
 
 
 database = firebase.database();
-
-var channelName = sessionStorage.getItem("channelName");
-var userName = sessionStorage.getItem("userName");
+var user = sessionStorage.getItem("email");
 
 
 
 
+if (user) {
+    // User is signed in.
 
-
-var ref = database.ref(channelName + "/");
-
-
-
-
-var gotit = 0;
-
-
-
-
-
-
-
-function send(){
-    s = document.getElementById("typemessage");
-    var data ={
-        Message: s.value,
-        UserName: userName
-
-    }
-
-    ref.push(data);
-
+} else {
+    // No user is signed in.
+    location.replace("index.html")
 
 }
 
 
 
 
+var ref = database.ref("users/" + user);
+
+
+
+
+
+var gotit = 0;
+var gotusername = 0;
+
+
+
+
+function signout(){
+    firebase.auth().signOut().then(function() {
+        location.replace( "index.html");
+        sessionStorage.setItem("email", null);
+
+
+    }).catch(function(error) {
+        alert(error.message);
+
+        // An error happened.
+    });
+}
+
+
+
 ref.on('value', gotdata, errdata);
 
 function gotdata(data) {
+    if(gotusername===0){
+        var setUsername = document.getElementById("Username");
+        const db = data.val();
+        const keys = Object.keys(db);
+        var k = keys[1];
+        var username = db[k];
+        console.log(username);
+
+        setUsername.innerText = "Welcome " + username;
+
+
+
+
+    }
+
+
+}
+
+function errdata(data){
+    console.log("errdata");
+}
+
+
+
+
+//use this later
+
+/*
+
     var titlechannelName = document.getElementById("titlechannelName")
 
     titlechannelName.innerText = channelName;
@@ -141,9 +170,4 @@ function gotdata(data) {
     }
 
 
-}
-
-function errdata(data){
-    console.log("errdata");
-}
-
+ */
