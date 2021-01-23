@@ -37,7 +37,7 @@ function cr() {
 
     };
         c+=1;
-        k.value= "Enter Something";
+        k.placeholder= "Enter Something";
         d.appendChild(q);
         d.appendChild(q)
 
